@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Be My Valentine 💘</title>
+  <style>
+    body {
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      overflow: hidden;
+    }
+
+    .card {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      position: relative;
+      min-width: 320px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      position: relative;
+    }
+
+    button {
+      font-size: 1.2rem;
+      padding: 12px 30px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+    }
+
+    #yes {
+      background: #ff4d6d;
+      color: white;
+    }
+
+    #no {
+      background: #ccc;
+      color: #333;
+    }
+
+    .celebrate {
+      font-size: 2rem;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card" id="card">
+    <h1>Can you be my Valentine? 💖</h1>
+
+    <div class="buttons">
+      <button id="yes">Yes 💘</button>
+      <button id="no">No 💔</button>
+    </div>
+
+    <div class="celebrate" id="celebrate" style="display:none;">
+      🎉💖 YAY!! HAPPY VALENTINE’S DAY 💖🎉
+    </div>
+  </div>
+
+  <!-- Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    const noBtn = document.getElementById("no");
+    const card = document.getElementById("card");
+    const celebrate = document.getElementById("celebrate");
+
+    let activated = false;
+
+    function moveNoButton() {
+      // Switch to absolute only once
+      if (!activated) {
+        noBtn.style.position = "absolute";
+        activated = true;
+      }
+
+      const cardRect = card.getBoundingClientRect();
+      const btnRect = noBtn.getBoundingClientRect();
+
+      const maxX = cardRect.width - btnRect.width - 20;
+      const maxY = cardRect.height - btnRect.height - 20;
+
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    }
+
+    // Move on hover (desktop)
+    noBtn.addEventListener("mouseenter", moveNoButton);
+
+    // Move on click (mobile safety)
+    noBtn.addEventListener("click", moveNoButton);
+
+    document.getElementById("yes").addEventListener("click", () => {
+      celebrate.style.display = "block";
+
+      confetti({
+        particleCount: 200,
+        spread: 100,
+        origin: { y: 0.6 }
+      });
+
+      setTimeout(() => {
+        confetti({
+          particleCount: 300,
+          spread: 160,
+          startVelocity: 45
+        });
+      }, 400);
+    });
+  </script>
+
+</body>
+</html>
